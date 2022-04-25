@@ -1,3 +1,71 @@
 {
-  "extends": "next/core-web-vitals"
+  "root": true,
+  "extends": ["next/core-web-vitals", "eslint:recommended"],
+  "plugins": ["@typescript-eslint", "prettier"],
+  "globals": {
+    "JSX": "readonly",
+    "React": "readonly"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.js", "**/*.jsx"],
+      "rules": {
+          "@typescript-eslint/explicit-function-return-type": "off"
+        }
+    }
+  ],
+  "rules": {
+    "no-console": "warn",
+    "no-extra-semi": "error",
+    "no-unsafe-negation": "error",
+    "default-case": "error",
+    "eqeqeq": ["error", "always", { "null": "ignore" }],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["warn"],
+    "comma-spacing": "error",
+    "newline-before-return": "error",
+    "no-useless-return": "error",
+    "object-shorthand": "error",
+    "id-length": ["error", { "min": 2, "max": 32, "exceptions": ["_"] }],
+    "no-cond-assign": "error",
+    "no-empty": ["error", { "allowEmptyCatch": true }],
+    "yoda": "error",
+    "no-negated-condition": "error",
+    "@typescript-eslint/explicit-function-return-type": "error",
+    "padding-line-between-statements": ["error",
+      {
+        "blankLine": "always",
+        "prev": ["const", "let", "var"],
+        "next": "*"
+      },
+      {
+        "blankLine": "any",
+        "prev": ["const", "let", "var"],
+        "next": ["const", "let", "var"]
+      },
+      {
+        "blankLine": "never",
+        "prev": ["import"],
+        "next": ["import"]
+      }
+    ],
+    "max-params": ["error", 3],
+    "no-multi-spaces": "error",
+    "prefer-const": "error",
+    "prefer-spread": "error",
+    "prefer-template": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "no-duplicate-imports": "error",
+    "import/no-unresolved": "error",
+    "import/newline-after-import": ["error", { "count": 1 }],
+    "sort-imports": ["error", {
+      "ignoreCase": false,
+      "ignoreDeclarationSort": false,
+      "ignoreMemberSort": false,
+      "memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
+      "allowSeparatedGroups": false
+    }],
+    "prettier/prettier": "error"
+  }
 }

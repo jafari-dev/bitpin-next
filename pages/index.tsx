@@ -1,11 +1,7 @@
-import type { NextPage } from 'next'
+import type { NextPage } from "next";
 
 const Home: NextPage = () => {
-  return (
-    <div>
-      Bitpin
-    </div>
-  )
-}
+  return <div>Bitpin</div>;
+};
 
-export default Home
+export default Home;
