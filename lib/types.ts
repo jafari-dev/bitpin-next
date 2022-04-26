@@ -7,3 +7,12 @@ export interface Market {
   change: number;
   isBookmarked: boolean;
 }
+
+export interface TradeData {
+  id: string;
+  date: string;
+  price: number;
+  amount: number;
+  type: "buy" | "sell";
+  totalPrice: number;
+}
