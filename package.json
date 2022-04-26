@@ -11,9 +11,11 @@
   "dependencies": {
     "@svgr/webpack": "^6.2.1",
     "bootstrap": "^5.1.3",
+    "chart.js": "^3.7.1",
     "next": "12.1.5",
     "react": "18.0.0",
     "react-bootstrap": "^2.3.0",
+    "react-chartjs-2": "^4.1.0",
     "react-dom": "18.0.0",
     "sass": "^1.50.1"
   },
