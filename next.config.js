@@ -5,6 +5,7 @@ const nextConfig = {
   reactStrictMode: true,
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
+    prependData: '@import "./styles/theme.scss";',
   },
   webpack(config) {
     config.module.rules.push({
