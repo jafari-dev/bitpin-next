@@ -1,7 +1,7 @@
 import "../styles/globals.scss";
 import { Container, ThemeProvider } from "react-bootstrap";
+import { Footer, Header } from "@layouts";
 import type { AppProps } from "next/app";
-import { Header } from "@layouts";
 
 function Application({ Component, pageProps }: AppProps): React.ReactElement {
   return (
@@ -9,6 +9,7 @@ function Application({ Component, pageProps }: AppProps): React.ReactElement {
       <Container>
         <Header />
         <Component {...pageProps} />
+        <Footer />
       </Container>
     </ThemeProvider>
   );
