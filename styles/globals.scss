@@ -1,6 +1,8 @@
 @import "_/fonts/font-face.scss";
 @import "bootstrap/dist/css/bootstrap.min.css";
 
+@import "./layouts/header.scss";
+
 body {
   direction: rtl;
 }
