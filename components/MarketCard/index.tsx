@@ -28,8 +28,17 @@ function MarketCard({ market, onToggleBookmark }: Props): React.ReactElement {
   const { id, code, title, change, price, logo, isBookmarked } = market;
 
   const handleToggleBookmark = useCallback(() => {
+    const cookies = document.cookie.split("; ");
+
+    if (cookies.find((item) => item.trim() === `${code}=bookmarked`)) {
+      document.cookie = `${code}=; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+    } else {
+      document.cookie = `${code}=bookmarked`;
+    }
+
     onToggleBookmark(market);
-  }, [onToggleBookmark, market]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onToggleBookmark, code, isBookmarked]);
 
   return (
     <div className={marketClasses.join(" ")}>
