@@ -16,3 +16,13 @@ export interface TradeData {
   type: "buy" | "sell";
   totalPrice: number;
 }
+
+export interface MarketDetails {
+  id: number;
+  title: string;
+  trades: TradeData[];
+  chart: {
+    labels: string[];
+    data: number[];
+  };
+}
