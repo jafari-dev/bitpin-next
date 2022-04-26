@@ -1,13 +1,13 @@
 footer {
   background-color: #301a78;
-  color: #ffffff;
+  color: $white;
 
   > p {
-    color: #cccccc;
+    color: $lightGray;
   }
 
   h5 {
-    color: #aaaaaa;
+    color: $darkGray;
   }
 
   button {

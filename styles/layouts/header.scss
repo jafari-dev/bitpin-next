@@ -23,18 +23,18 @@
 }
 
 header {
-  background-color: #301a78;
-  color: #ffffff;
+  background-color: $indigo;
+  color: $white;
 
   > svg {
     fill: transparent;
-    stroke: #ffd000;
+    stroke: $gold;
     width: 80px;
     height: 80px;
     animation: heartBeat 1.5s infinite;
   }
 
   h1 {
-    color: #ffd000;
+    color: $gold;
   }
 }

@@ -1,13 +1,13 @@
 nav {
-  background-color: #ffd000;
+  background-color: $gold;
 
   a {
-    color: #000000;
+    color: $black;
     margin-inline: 8px;
     padding: 4px 8px;
 
     &:hover {
-      color: #ffffff;
+      color: $white;
     }
   }
 }
