@@ -5,6 +5,9 @@
 @import "./layouts/footer.scss";
 @import "./layouts/navigation-bar.scss";
 
+@import "./components/market-card.scss";
+
+
 body {
   direction: rtl;
   background-color: $lightGray;
