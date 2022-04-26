@@ -27,10 +27,13 @@ const MarketsList: NextPage = () => {
     setIsDataFetched(true);
   }, []);
 
-  const visibleMarkets = useMemo(
-    (): Market[] => markets.filter(({ isBookmarked }) => isBookmarked === areJustBookmarksVisible),
-    [markets, areJustBookmarksVisible]
-  );
+  const visibleMarkets = useMemo((): Market[] => {
+    if (areJustBookmarksVisible) {
+      return markets.filter((market) => market.isBookmarked);
+    } else {
+      return markets;
+    }
+  }, [markets, areJustBookmarksVisible]);
 
   const handleToggleBookmark = useCallback(
     (selectedMarket: Market) => {
