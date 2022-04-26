@@ -1,5 +1,5 @@
 import { Col, Row } from "react-bootstrap";
-import { LoadingIndicator, MarketCard } from "@components";
+import { Empty, LoadingIndicator, MarketCard } from "@components";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { Market } from "#/types";
 import type { NextPage } from "next";
@@ -93,6 +93,7 @@ const MarketsList: NextPage = () => {
               </Col>
             ))}
           </Row>
+          {visibleMarkets.length === 0 ? <Empty /> : null}
         </>
       ) : (
         <LoadingIndicator />
