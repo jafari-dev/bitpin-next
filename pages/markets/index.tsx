@@ -1,31 +1,13 @@
 import { Col, Row } from "react-bootstrap";
-import { Empty, LoadingIndicator, MarketCard } from "@components";
+import { Empty, MarketCard } from "@components";
+import { GetStaticProps, NextPage } from "next";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { Market } from "#/types";
-import type { NextPage } from "next";
 import { fetchMarkets } from "#/api";
 
-const MarketsList: NextPage = () => {
-  const [markets, setMarkets] = useState<Market[]>([]);
-  const [isDataFetched, setIsDataFetched] = useState(false);
+const MarketsList: NextPage<{ markets: Market[] }> = (props) => {
   const [areJustBookmarksVisible, setAreJustBookmarksVisible] = useState(true);
-
-  const getAndSetMarkets = useCallback(async (): Promise<void> => {
-    const cookies = document.cookie.split("; ");
-    const fetchedMarkets = await fetchMarkets();
-    const transformedMarkets: Market[] = fetchedMarkets.map((market) => ({
-      id: market.id,
-      title: market.title_fa,
-      logo: market.currency1.image,
-      change: market.price_info.change,
-      code: market.code,
-      isBookmarked: cookies.some((cookie) => cookie === `${market.code}=bookmarked`),
-      price: market.price,
-    }));
-
-    setMarkets(transformedMarkets);
-    setIsDataFetched(true);
-  }, []);
+  const [markets, setMarkets] = useState(props.markets);
 
   const visibleMarkets = useMemo((): Market[] => {
     if (areJustBookmarksVisible) {
@@ -48,7 +30,14 @@ const MarketsList: NextPage = () => {
   );
 
   useEffect(() => {
-    getAndSetMarkets();
+    const cookies = document.cookie.split("; ");
+
+    const updatedMarkets = props.markets.map((market) => ({
+      ...market,
+      isBookmarked: cookies.some((cookie) => cookie === `${market.code}=bookmarked`),
+    }));
+
+    setMarkets(updatedMarkets);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -58,51 +47,65 @@ const MarketsList: NextPage = () => {
   return (
     <section className="my-4">
       <h3>لیست مارکت‌ها</h3>
-      {isDataFetched ? (
-        <>
-          <Row className="bg-white rounded-3 py-2 mx-auto">
-            <Col xs={12} md={6} className="d-none d-md-block">
-              <h5 className="mb-0">فیلتر بر اساس</h5>
-            </Col>
-            <Col xs={6} md={3} className="d-flex align-items-center">
-              <input
-                readOnly
-                id="all-markets"
-                type="radio"
-                checked={!areJustBookmarksVisible}
-                onClick={showAllMarkets}
-              />
-              <label htmlFor="all-markets" className="me-2">
-                همه
-              </label>
-            </Col>
-            <Col xs={6} md={3} className="d-flex align-items-center">
-              <input
-                readOnly
-                id="favorite-markets"
-                type="radio"
-                checked={areJustBookmarksVisible}
-                onClick={showBookmarkedMarkets}
-              />
-              <label htmlFor="favorite-markets" className="me-2">
-                منتخب
-              </label>
-            </Col>
-          </Row>
-          <Row>
-            {visibleMarkets.map((market) => (
-              <Col key={market.id} sm={6} md={4} lg={3}>
-                <MarketCard market={market} onToggleBookmark={handleToggleBookmark} />
-              </Col>
-            ))}
-          </Row>
-          {visibleMarkets.length === 0 ? <Empty /> : null}
-        </>
-      ) : (
-        <LoadingIndicator />
-      )}
+      <Row className="bg-white rounded-3 py-2 mx-auto">
+        <Col xs={12} md={6} className="d-none d-md-block">
+          <h5 className="mb-0">فیلتر بر اساس</h5>
+        </Col>
+        <Col xs={6} md={3} className="d-flex align-items-center">
+          <input
+            readOnly
+            id="all-markets"
+            type="radio"
+            checked={!areJustBookmarksVisible}
+            onClick={showAllMarkets}
+          />
+          <label htmlFor="all-markets" className="me-2">
+            همه
+          </label>
+        </Col>
+        <Col xs={6} md={3} className="d-flex align-items-center">
+          <input
+            readOnly
+            id="favorite-markets"
+            type="radio"
+            checked={areJustBookmarksVisible}
+            onClick={showBookmarkedMarkets}
+          />
+          <label htmlFor="favorite-markets" className="me-2">
+            منتخب
+          </label>
+        </Col>
+      </Row>
+      <Row>
+        {visibleMarkets.map((market) => (
+          <Col key={market.id} sm={6} md={4} lg={3}>
+            <MarketCard market={market} onToggleBookmark={handleToggleBookmark} />
+          </Col>
+        ))}
+      </Row>
+      {visibleMarkets.length === 0 ? <Empty /> : null}
     </section>
   );
 };
 
 export default memo(MarketsList);
+
+export const getStaticProps: GetStaticProps = async () => {
+  const markets = await fetchMarkets();
+  const newFaceMarkets: Market[] = markets.map((market) => ({
+    id: market.id,
+    title: market.title_fa,
+    logo: market.currency1.image,
+    change: market.price_info.change,
+    code: market.code,
+    isBookmarked: false,
+    price: market.price,
+  }));
+
+  return {
+    props: {
+      markets: newFaceMarkets,
+    },
+    revalidate: 300,
+  };
+};
