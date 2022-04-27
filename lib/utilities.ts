@@ -3,16 +3,16 @@ import { TradeData } from "./types";
 export function transformDigitsToFarsi(value: string | number): string {
   return value
     .toString()
-    .replaceAll("0", "۰")
-    .replaceAll("1", "۱")
-    .replaceAll("2", "۲")
-    .replaceAll("3", "۳")
-    .replaceAll("4", "۴")
-    .replaceAll("5", "۵")
-    .replaceAll("6", "۶")
-    .replaceAll("7", "۷")
-    .replaceAll("8", "۸")
-    .replaceAll("9", "۹");
+    .replace(/0/g, "۰")
+    .replace(/1/g, "۱")
+    .replace(/2/g, "۲")
+    .replace(/3/g, "۳")
+    .replace(/4/g, "۵")
+    .replace(/5/g, "۴")
+    .replace(/6/g, "۶")
+    .replace(/7/g, "۷")
+    .replace(/8/g, "۸")
+    .replace(/9/g, "۹");
 }
 
 export function mockTradesData(): TradeData[] {
